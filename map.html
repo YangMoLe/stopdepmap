@@ -7,8 +7,10 @@
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 <style>
-body { margin: 0; padding: 0; }
-#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+body { margin: 0; padding: 0; display: flex; height: 100vh; }
+#map { flex: 1; position: relative; }
+#content { flex: 1; padding: 20px; }
+select { width: 100%; padding: 10px; margin-bottom: 20px; }
 </style>
 </head>
 <body>
@@ -22,7 +24,19 @@ padding: 0;
 }
 </style>
  
-<div id="map"></div>
+<div id="map">
+	
+</div>
+<div id="content">
+	<select class="tab-search-select js-choice" name="place-thematic">
+            <option value="" selected>All thematics</option>
+            <option data-custom-properties="basics-parent|basics-icon" value="basics">Basics</option>
+            <option data-custom-properties="basics-child|clothes-icon" value="clothes">Daily Life</option>
+            <!-- Add more options as needed -->
+        </select>
+        
+        <!-- Your content goes here -->
+</div>
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3RvcGRlcG9ydGF0aW9uc3ZpZW5uYSIsImEiOiJjbG9pZjU2aWUxY2JsMmlvaXZ4eDQ2enV6In0.pqwjXiOjhvIbPnxcKKQWYQ';
