@@ -23,10 +23,7 @@ cursor: pointer;
 padding: 0;
 }
 </style>
- 
-<div id="map">
-	
-</div>
+
 <div id="content">
 	<select class="tab-search-select js-choice" name="place-thematic">
             <option value="" selected>All thematics</option>
@@ -36,6 +33,11 @@ padding: 0;
         </select>
         
         <!-- Your content goes here -->
+</div>
+
+
+<div id="map">
+	
 </div>
 
 <script>
@@ -103,7 +105,7 @@ padding: 0;
 		el.style.backgroundSize = '100%';
 		 
 		el.addEventListener('click', () => {
-		window.alert(marker.properties.message);
+		window.alert(marker.properties.title);
 		});
 		 
 		// Add markers to the map.
