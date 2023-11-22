@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Display a map on a webpage</title>
+<title>Add custom icons with Markers</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
@@ -12,16 +12,91 @@ body { margin: 0; padding: 0; }
 </style>
 </head>
 <body>
+<style>
+.marker {
+display: block;
+border: none;
+border-radius: 50%;
+cursor: pointer;
+padding: 0;
+}
+</style>
+ 
 <div id="map"></div>
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3RvcGRlcG9ydGF0aW9uc3ZpZW5uYSIsImEiOiJjbG9pZjU2aWUxY2JsMmlvaXZ4eDQ2enV6In0.pqwjXiOjhvIbPnxcKKQWYQ';
-const map = new mapboxgl.Map({
-container: 'map', // container ID
-// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-style: 'mapbox://styles/mapbox/streets-v12', // style URL
-center: [16.363449,48.210033], // starting position [lng, lat]
-zoom: 12 // starting zoom
-});
+	const map = new mapboxgl.Map({
+	container: 'map', // container ID
+	// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+	style: 'mapbox://styles/mapbox/streets-v12', // style URL
+	center: [16.363449,48.210033], // starting position [lng, lat]
+	zoom: 12 // starting zoom
+	});
+
+	const geojson = {
+		'type': 'FeatureCollection',
+		'features': [
+			{
+				"type": "Feature",
+				"geometry": {
+				  "type": "Point",
+				  "coordinates": [16.3670, 48.1938]
+				},
+				"properties": {
+				  "identifier": 0,
+				  "title": "Caritas Fremdenrechtlicher Journaldienst",
+				  "description": "Beratung für Drittstaatsangehörige und EWR-Bürger*innen zum NAG",
+				  "address": "Mommsengasse 35, 2. Stock, 1040 Wien",
+				  "tel": "05 178 026 99",
+				  "email": "fremdenrechtsberatung@caritas-wien.at",
+				  "opening_hours": "Montag bis Freitag zwischen 13:00 und 15:00 Uhr (Nur Telefonberatung, nach Bedarf Einzeltermin)",
+				  "services": [
+					"Familienzusammenführung von Drittstaatsangehörigen und EWR-Bürger*innen",
+					"Umstieg von AB(+) ins NAG",
+					"Beratung nur zum NAG und StBG",
+					"Verfassen Schriftsätze/Rechtsmittel",
+					"Evtl. Verfahrensbetreuung"
+				  ],
+				  "url": "",
+				  "thematics": [
+					{
+					  "term_id": 0,
+					  "name": "Daily life",
+					  "slug": "daily-life",
+					},
+					{
+					  "term_id": 1,
+					  "name": "Basics",
+					  "slug": "basics",
+					},
+				  ]
+				}
+			}
+		]
+	};
+
+	// Add markers to the map.
+	for (const marker of geojson.features) {
+	// Create a DOM element for each marker.
+		const el = document.createElement('div');
+		const width = 100//marker.properties.iconSize[0];
+		const height = 100//marker.properties.iconSize[1];
+		el.className = 'marker';
+		el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
+		el.style.width = `${width}px`;
+		el.style.height = `${height}px`;
+		el.style.backgroundSize = '100%';
+		 
+		el.addEventListener('click', () => {
+		window.alert(marker.properties.message);
+		});
+		 
+		// Add markers to the map.
+		new mapboxgl.Marker(el)
+		.setLngLat(marker.geometry.coordinates)
+		.addTo(map);
+	}
 </script>
  
 </body>
