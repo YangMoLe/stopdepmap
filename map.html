@@ -25,12 +25,17 @@ padding: 0;
 </style>
 
 <div id="content">
-	<select class="tab-search-select js-choice" name="place-thematic">
+	<select class="" id="thematic-filter">
             <option value="" selected>All thematics</option>
-            <option data-custom-properties="basics-parent|basics-icon" value="basics">Basics</option>
-            <option data-custom-properties="basics-child|clothes-icon" value="clothes">Daily Life</option>
+            <option value="basics">Basics</option>
+            <option value="daily-life">Daily Life</option>
+			<option value="migrants">Migrants</option>
             <!-- Add more options as needed -->
-        </select>
+	</select>
+	
+	<ul id="feature-list">
+	<!-- Features will be dynamically added here -->
+	</ul>
         
         <!-- Your content goes here -->
 </div>
@@ -88,30 +93,114 @@ padding: 0;
 					},
 				  ]
 				}
+			},
+			{
+				"type": "Feature",
+				"geometry": {
+				  "type": "Point",
+				  "coordinates": [16.3707, 48.2095]
+				},
+				"properties": {
+				  "identifier": 105511,
+				  "title": "Beratungszentrum für Migranten und Migrantinnen",
+				  "description": "Beratungszentrum für in Wien lebende Migrant:innen und deren Angehörige",
+				  "address": "Hoher Markt 8/Stiege 4/2.Stock/Tür 2, 1010 Wien",
+				  "tel": "01-712 56 04",
+				  "email": "migrant@migrant.at",
+				  "opening_hours": "Montag, Dienstag, Mittwoch, Freitag 9-17 Uhr, Donnerstag 09-19 Uhr",
+				  "services": [
+					"Verlängerungsanträge für Aufenthaltstitel",
+					"Abklärung Umstieg auf Daueraufenthalt EU",
+					"Umstieg von AB(+) auf RWR+",
+					"(Wieder-)Einstieg in den Arbeitsmarkt",
+					"Zugang zu Bildung und Qualifikation",
+					"Sozialrechtliche Absicherung"
+				  ],
+				  "note": "Persönlicher Termin ausschließlich nach telefonischer Terminvereinbarung!",
+				  "url": "https://www.migrant.at",
+				  "thematics": [
+					{
+					  "term_id": 0,
+					  "name": "Daily life",
+					  "slug": "daily-life",
+					},
+					{
+					  "term_id": 2,
+					  "name": "Migrants",
+					  "slug": "migrants",
+					}
+				  ]
+				}
 			}
 		]
 	};
+	
+	var markers = [];
+	
+	addMarkers(geojson.features);
+	
+	// Call this function to remove all markers
+	function clearMarkers() {
+	  for (var i = 0; i < markers.length; i++) {
+		markers[i].remove();
+	  }
 
-	// Add markers to the map.
-	for (const marker of geojson.features) {
-	// Create a DOM element for each marker.
-		const el = document.createElement('div');
-		const width = 100//marker.properties.iconSize[0];
-		const height = 100//marker.properties.iconSize[1];
-		el.className = 'marker';
-		el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
-		el.style.width = `${width}px`;
-		el.style.height = `${height}px`;
-		el.style.backgroundSize = '100%';
-		 
-		el.addEventListener('click', () => {
-		window.alert(marker.properties.title);
-		});
-		 
+	  // Clear the markers array
+	  markers = [];
+	}
+	
+	
+	function addMarkers(data){
+		clearMarkers();
 		// Add markers to the map.
-		new mapboxgl.Marker(el)
-		.setLngLat(marker.geometry.coordinates)
-		.addTo(map);
+		for (const marker of data) {
+		// Create a DOM element for each marker.
+			const el = document.createElement('div');
+			const width = 100//marker.properties.iconSize[0];
+			const height = 100//marker.properties.iconSize[1];
+			el.className = 'marker';
+			el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
+			el.style.width = `${width}px`;
+			el.style.height = `${height}px`;
+			el.style.backgroundSize = '100%';
+			 
+			el.addEventListener('click', () => {
+			window.alert(marker.properties.title);
+			});
+			 
+			// Add markers to the map.
+			_marker = new mapboxgl.Marker(el)
+			.setLngLat(marker.geometry.coordinates)
+			.addTo(map);
+			markers.push(_marker);
+		}
+	}
+
+	
+	
+	const thematicFilter = document.getElementById('thematic-filter');
+	const featureList = document.getElementById('feature-list');
+	
+	
+	renderFeatures(geojson.features);
+	
+	// Event listener for select change
+	thematicFilter.addEventListener('change', function() {
+		const selectedThematic = thematicFilter.value;
+		const filteredFeatures = (selectedThematic === '') ? geojson.features : geojson.features.filter(feature => feature.properties.thematics.some(theme => theme.slug === selectedThematic));
+		renderFeatures(filteredFeatures);
+		addMarkers(filteredFeatures);
+	});
+	
+	// Function to render the list of features
+	function renderFeatures(data) {
+		featureList.innerHTML = ''; // Clear previous features
+	
+		data.forEach(feature => {
+			const li = document.createElement('li');
+			li.textContent = feature.properties.title;
+			featureList.appendChild(li);
+		});
 	}
 </script>
  
