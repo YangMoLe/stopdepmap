@@ -1,3 +1,4 @@
+[
 {
     "type": "Feature",
     "geometry": {
@@ -32,5 +33,43 @@
           "slug": "basics",
         },
       ]
+},
+{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [16.3707, 48.2095]
+    },
+    "properties": {
+      "identifier": 105511,
+      "title": "Beratungszentrum für Migranten und Migrantinnen",
+      "description": "Beratungszentrum für in Wien lebende Migrant:innen und deren Angehörige",
+      "address": "Hoher Markt 8/Stiege 4/2.Stock/Tür 2, 1010 Wien",
+      "tel": "01-712 56 04",
+      "email": "migrant@migrant.at",
+      "opening_hours": "Montag, Dienstag, Mittwoch, Freitag 9-17 Uhr, Donnerstag 09-19 Uhr",
+      "services": [
+        "Verlängerungsanträge für Aufenthaltstitel",
+        "Abklärung Umstieg auf Daueraufenthalt EU",
+        "Umstieg von AB(+) auf RWR+",
+        "(Wieder-)Einstieg in den Arbeitsmarkt",
+        "Zugang zu Bildung und Qualifikation",
+        "Sozialrechtliche Absicherung"
+      ],
+      "note": "Persönlicher Termin ausschließlich nach telefonischer Terminvereinbarung!",
+      "url": "https://www.migrant.at",
+      "thematics": [
+        {
+          "term_id": 0,
+          "name": "Daily life",
+          "slug": "daily-life",
+        },
+        {
+          "term_id": 2,
+          "name": "Migrants",
+          "slug": "migrants",
+        }
+      ]
     }
-}
+  }
+]
