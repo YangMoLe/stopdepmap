@@ -1,0 +1,36 @@
+{
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [16.3670, 48.1938]
+    },
+    "properties": {
+      "identifier": 0,
+      "title": "Caritas Fremdenrechtlicher Journaldienst",
+      "description": "Beratung für Drittstaatsangehörige und EWR-Bürger*innen zum NAG",
+      "address": "Mommsengasse 35, 2. Stock, 1040 Wien",
+      "tel": "05 178 026 99",
+      "email": "fremdenrechtsberatung@caritas-wien.at",
+      "opening_hours": "Montag bis Freitag zwischen 13:00 und 15:00 Uhr (Nur Telefonberatung, nach Bedarf Einzeltermin)",
+      "services": [
+        "Familienzusammenführung von Drittstaatsangehörigen und EWR-Bürger*innen",
+        "Umstieg von AB(+) ins NAG",
+        "Beratung nur zum NAG und StBG",
+        "Verfassen Schriftsätze/Rechtsmittel",
+        "Evtl. Verfahrensbetreuung"
+      ],
+      "url": "",
+      "thematics": [
+        {
+          "term_id": 0,
+          "name": "Daily life",
+          "slug": "daily-life",
+        },
+        {
+          "term_id": 1,
+          "name": "Basics",
+          "slug": "basics",
+        },
+      ]
+    }
+}
